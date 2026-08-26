@@ -19,6 +19,7 @@ services:
     depends_on:
     - catalogue
     - user
+    - cart
   user:
     build: ./user
     image: venkat/user:v1
