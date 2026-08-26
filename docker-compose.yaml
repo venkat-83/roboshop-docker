@@ -45,6 +45,13 @@ services:
   redis:
     image: redis:7
     container_name: redis 
+  mysql:
+    image: venkat/mysql:v1
+    build: ./mysql
+    container_name: mysql
+    command: --mysql-native-password=ON --innodb-lock_wait_timeout=120
+    environment:
+      MYSQL_ROOT_PASSWORD: "RoboShop@1"
 networks:
   default:
     name: roboshop
