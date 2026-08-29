@@ -2,19 +2,19 @@ name: roboshop
 services:
   mongodb:
     build: ./mongodb
-    image: joindevops/mongodb:4.0.0 # docker build -t joindevops/mongodb:4.0.0
-    container_name: mongodb # docker run -d --network roboshop joindevops/mongodb:4.0.0
-    volumes:
-    - mongodb:/data/db # mongodb stores data in /data/db directory
+    image: venkat/mongodb:v1 
+    container_name: mongodb 
+    # volumes:
+    # - mongodb:/data/db 
   catalogue:
     build: ./catalogue
-    image: joindevops/catalogue:4.0.0
+    image: venkat/catalogue:v1
     container_name: catalogue
     depends_on:
     - mongodb
   frontend:
     build: ./frontend
-    image: joindevops/frontend:4.0.0
+    image: venkat/frontend:v1
     container_name: frontend
     ports:
     - "80:80"
@@ -26,7 +26,7 @@ services:
     - payment
   user:
     build: ./user
-    image: joindevops/user:4.0.0
+    image: venkat/user:v1
     container_name: user
     environment:
       MONGO: true
@@ -37,7 +37,7 @@ services:
     - mongodb
   cart:
     build: ./cart
-    image: joindevops/cart:4.0.0
+    image: venkat/cart:v1
     container_name: cart
     environment:
       REDIS_HOST: redis
@@ -48,7 +48,7 @@ services:
     - catalogue
   shipping:
     build: ./shipping
-    image: joindevops/shipping:4.0.0
+    image: venkat/shipping:v1
     container_name: shipping
     environment:
       CART_ENDPOINT: "cart:8080"
@@ -58,7 +58,7 @@ services:
     - cart
   payment:
     build: ./payment
-    image: joindevops/payment:4.0.0
+    image: venkat/payment:v1
     container_name: payment
     environment:
       CART_HOST: "cart"
@@ -74,33 +74,33 @@ services:
     - rabbitmq
   redis:
     image: redis:7
-    container_name: redis # docker run -d --name redis --network roboshop redis:7
-    volumes:
-    - redis:/data
+    container_name: redis 
+    # volumes:
+    # - redis:/data
   mysql:
-    image: joindevops/mysql:4.0.0
+    image: venkat/mysql:v1
     build: ./mysql
     container_name: mysql
-    command: --mysql-native-password=ON --innodb-lock_wait_timeout=120
+    # command: --mysql-native-password=ON --innodb-lock_wait_timeout=120
     environment:
       MYSQL_ROOT_PASSWORD: "RoboShop@1"
-    volumes:
-    - mysql:/var/lib/mysql
+    # volumes:
+    # - mysql:/var/lib/mysql
   rabbitmq:
     image: rabbitmq:3
     container_name: rabbitmq
     environment:
       RABBITMQ_DEFAULT_USER: roboshop
       RABBITMQ_DEFAULT_PASS: roboshop123
-    volumes:
-    - rabbitmq:/var/lib/rabbitmq
+    # volumes:
+    # - rabbitmq:/var/lib/rabbitmq
 networks:
-  default: # this means all the services in this file use this network
+  default: 
     name: roboshop
     driver: bridge
-    external: false # if true it should be created manually, if false docker creates this network
-volumes:
-  mongodb: # docker volume create mongodb
-  redis: # docker volume create redis
-  mysql: # docker volume create mysql
-  rabbitmq: # docker volume create rabbitmq
+    external: false 
+# volumes:
+#   mongodb: # docker volume create mongodb
+#   redis: # docker volume create redis
+#   mysql: # docker volume create mysql
+#   rabbitmq: # docker volume create rabbitmq
