@@ -4,8 +4,8 @@ services:
     build: ./mongodb
     image: venkat/mongodb:v1
     container_name: mongodb 
-    volumes:
-    - mongodb:/data/db
+    # volumes:
+    # - mongodb:/data/db
   catalogue:
     build: ./catalogue
     image: venkat/catalogue:v1
@@ -75,31 +75,31 @@ services:
   redis:
     image: redis:7
     container_name: redis 
-    volumes:
-    - redis:/data  
+    # volumes:
+    # - redis:/data  
   mysql:
     image: venkat/mysql:v1
     build: ./mysql
     container_name: mysql
     environment:
       MYSQL_ROOT_PASSWORD: "RoboShop@1"
-    volumes:
-    - mysql:/var/lib/mysql  
+    # volumes:
+    # - mysql:/var/lib/mysql  
   rabbitmq:
     image: rabbitmq:3
     container_name: rabbitmq
     environment:
       RABBITMQ_DEFAULT_USER: roboshop
       RABBITMQ_DEFAULT_PASS: roboshop123
-    volumes:
-    - rabbitmq:/var/lib/rabbitmq  
+    # volumes:
+    # - rabbitmq:/var/lib/rabbitmq  
 networks:
   default:
     name: roboshop
     driver: bridge
     external: false
-volumes:
-  mongodb: # docker volume create mongodb
-  redis: # docker volume create redis
-  mysql: # docker volume create mysql
-  rabbitmq: # docker volume create rabbitmq    
+# volumes:
+#   mongodb: # docker volume create mongodb
+#   redis: # docker volume create redis
+#   mysql: # docker volume create mysql
+#   rabbitmq: # docker volume create rabbitmq    
